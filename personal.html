@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>个人中心 - 小兔鲜儿</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/personal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="./js/personal.js" defer></script>
+</head>
+<body>
+    <!-- 快捷导航栏 -->
+    <div class="shortcut">
+        <div class="heart">
+            <ul class="floatR clearfix">
+                <li>|</li>
+                <li class="welcome-user">
+                    <i class="fas fa-user-circle"></i>
+                    <span>欢迎您，<span id="userName">陈小薇</span></span>
+                </li>
+                <li>|</li>
+                <li>
+                    <a href="index.html"><i class="fas fa-home"></i> 返回首页</a>
+                </li>
+                <li>|</li>
+                <li>
+                    <a href="cart.html"><i class="fas fa-shopping-cart"></i> 购物车</a>
+                </li>
+                <li>|</li>
+                <li>
+                    <a href="personal.html" class="active"><i class="fas fa-user"></i> 个人中心</a>
+                </li>
+                <li>|</li>
+                <li>
+                    <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> 退出</a>
+                </li>
+                <li>|</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 导航区域 -->
+    <div class="header">
+        <div class="heart header_dingwei">
+            <div class="logo">
+            </div>
+            <!-- 导航菜单 -->
+            <ul class="navigation">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="category.html?type=fresh">生鲜</a></li>
+                <li><a href="category.html?type=food">美食</a></li>
+                <li><a href="category.html?type=kitchen">餐厨</a></li>
+                <li><a href="category.html?type=appliance">电器</a></li>
+                <li><a href="category.html?type=home">居家</a></li>
+                <li><a href="category.html?type=care">洗护</a></li>
+                <li><a href="category.html?type=baby">孕婴</a></li>
+                <li><a href="category.html?type=clothing">服装</a></li>
+            </ul>
+            <!-- 搜索和购物车 -->
+            <div class="search_shop">
+                <img src="uploads/搜索.png" alt="搜索">
+                <input type="search" placeholder="搜索商品...">
+                <a href="cart.html" id="cartLink">    
+                    <img src="uploads/购物 车1.png" alt="购物车">
+                </a>
+                <span id="cartCount">3</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 个人中心主要内容 -->
+    <div class="personal-main-container heart">
+        <!-- 页面标题 -->
+        <div class="personal-header">
+            <div class="personal-title">
+                <h1><i class="fas fa-user-circle"></i> 个人中心</h1>
+                <p class="subtitle">管理您的账户信息、订单和收藏</p>
+            </div>
+            <div class="user-welcome">
+                <div class="user-avatar">
+                    <img src="./images/头像.jpg" alt="用户头像" id="userAvatar">
+                </div>
+                <div class="user-info">
+                    <div class="user-name" id="displayUserName">陈小薇</div>
+                    <div class="user-level">
+                        <i class="fas fa-crown"></i> 黄金会员
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 主要内容区域 -->
+        <div class="personal-content">
+            <!-- 左侧导航栏 -->
+            <div class="personal-sidebar">
+                <div class="sidebar-menu">
+                    <a href="#profile" class="menu-item active" data-section="profile">
+                        <div class="menu-icon"><i class="fas fa-user"></i></div>
+                        <div class="menu-text">个人资料</div>
+                    </a>
+                    <a href="#orders" class="menu-item" data-section="orders">
+                        <div class="menu-icon"><i class="fas fa-clipboard-list"></i></div>
+                        <div class="menu-text">我的订单</div>
+                        <div class="menu-badge" id="orderBadge">3</div>
+                    </a>
+                    <a href="#address" class="menu-item" data-section="address">
+                        <div class="menu-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="menu-text">收货地址</div>
+                        <div class="menu-badge" id="addressBadge">2</div>
+                    </a>
+                    <a href="#favorites" class="menu-item" data-section="favorites">
+                        <div class="menu-icon"><i class="fas fa-heart"></i></div>
+                        <div class="menu-text">我的收藏</div>
+                        <div class="menu-badge" id="favoriteBadge">12</div>
+                    </a>
+                    <a href="#wallet" class="menu-item" data-section="wallet">
+                        <div class="menu-icon"><i class="fas fa-wallet"></i></div>
+                        <div class="menu-text">我的钱包</div>
+                    </a>
+                    <a href="#coupons" class="menu-item" data-section="coupons">
+                        <div class="menu-icon"><i class="fas fa-ticket-alt"></i></div>
+                        <div class="menu-text">优惠券</div>
+                        <div class="menu-badge" id="couponBadge">5</div>
+                    </a>
+                    <a href="#security" class="menu-item" data-section="security">
+                        <div class="menu-icon"><i class="fas fa-shield-alt"></i></div>
+                        <div class="menu-text">账户安全</div>
+                    </a>
+                    <a href="#settings" class="menu-item" data-section="settings">
+                        <div class="menu-icon"><i class="fas fa-cog"></i></div>
+                        <div class="menu-text">设置</div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- 右侧内容区域 -->
+            <div class="personal-main">
+                <!-- 个人资料区域 -->
+                <div id="profile" class="content-section active">
+                    <div class="profile-card">
+                        <div class="card-header">
+                            <h3><i class="fas fa-id-card"></i> 基本资料</h3>
+                            <button class="edit-btn" id="editProfileBtn">
+                                <i class="fas fa-edit"></i> 编辑资料
+                            </button>
+                        </div>
+                        <form id="profileForm" class="profile-form">
+                            <div class="form-group full-width">
+                                <div class="avatar-upload">
+                                    <div class="avatar-preview">
+                                        <img src="./images/头像.jpg" alt="用户头像" id="avatarPreview">
+                                    </div>
+                                    <div class="upload-controls">
+                                        <button type="button" class="btn-upload" id="uploadAvatarBtn">
+                                            <i class="fas fa-upload"></i> 更换头像
+                                        </button>
+                                        <input type="file" id="avatarInput" accept="image/*" style="display: none;">
+                                        <p class="upload-hint">支持 JPG、PNG 格式，大小不超过 2MB</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="username">用户名</label>
+                                <input type="text" id="username" class="form-control" value="陈小薇" disabled>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="nickname">昵称</label>
+                                <input type="text" id="nickname" class="form-control" value="小薇" disabled>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="email">邮箱</label>
+                                <input type="email" id="email" class="form-control" value="chenxiaowei@qq.com" disabled>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="phone">手机号</label>
+                                <input type="tel" id="phone" class="form-control" value="135****4435" disabled>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="gender">性别</label>
+                                <select id="gender" class="form-control" disabled>
+                                    <option value="female" selected>女</option>
+                                    <option value="male">男</option>
+                                    <option value="secret">保密</option>
+                                </select>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label for="birthday">生日</label>
+                                <input type="date" id="birthday" class="form-control" value="2004-12-23" disabled>
+                            </div>
+                            
+                            <div class="form-group full-width">
+                                <label for="signature">个性签名</label>
+                                <textarea id="signature" class="form-control" rows="3" disabled>热爱生活，享受美食，喜欢小兔鲜儿的每一件商品！</textarea>
+                            </div>
+                            
+                            <div class="form-actions" id="profileActions" style="display: none;">
+                                <button type="button" class="btn-cancel" id="cancelEditBtn">取消</button>
+                                <button type="submit" class="btn-save">保存更改</button>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- 账户统计 -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-shopping-bag"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>累计订单</h4>
+                                <p class="stat-number">24</p>
+                                <p class="stat-desc">已消费 ¥8,567</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-heart"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>我的收藏</h4>
+                                <p class="stat-number">12</p>
+                                <p class="stat-desc">商品与店铺</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-ticket-alt"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>优惠券</h4>
+                                <p class="stat-number">5</p>
+                                <p class="stat-desc">可用优惠券</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">
+                                <i class="fas fa-coins"></i>
+                            </div>
+                            <div class="stat-content">
+                                <h4>积分</h4>
+                                <p class="stat-number">1,258</p>
+                                <p class="stat-desc">可兑换礼品</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 我的订单区域 -->
+                <div id="orders" class="content-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-clipboard-list"></i> 最近订单</h3>
+                        <a href="order.html" class="view-all">查看全部 <i class="fas fa-chevron-right"></i></a>
+                    </div>
+                    <div class="recent-orders">
+                        <!-- 订单将通过JS动态生成 -->
+                    </div>
+                </div>
+
+                <!-- 收货地址区域 -->
+                <div id="address" class="content-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-map-marker-alt"></i> 收货地址</h3>
+                        <button class="btn-add" id="addAddressBtn">
+                            <i class="fas fa-plus"></i> 添加新地址
+                        </button>
+                    </div>
+                    <div class="address-list">
+                        <!-- 地址将通过JS动态生成 -->
+                    </div>
+                </div>
+
+                <!-- 我的收藏区域 -->
+                <div id="favorites" class="content-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-heart"></i> 我的收藏</h3>
+                        <div class="favorite-tabs">
+                            <button class="tab-btn active" data-type="product">商品收藏</button>
+                            <button class="tab-btn" data-type="shop">店铺收藏</button>
+                        </div>
+                    </div>
+                    <div class="favorite-content">
+                        <div class="favorite-products">
+                            <!-- 收藏商品将通过JS动态生成 -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 我的钱包区域 -->
+                <div id="wallet" class="content-section">
+                    <div class="wallet-overview">
+                        <div class="wallet-card">
+                            <h3>账户余额</h3>
+                            <p class="balance">¥ 1,568.50</p>
+                            <div class="wallet-actions">
+                                <button class="wallet-btn"><i class="fas fa-plus"></i> 充值</button>
+                                <button class="wallet-btn"><i class="fas fa-exchange-alt"></i> 提现</button>
+                            </div>
+                        </div>
+                        <div class="wallet-details">
+                            <h3>交易记录</h3>
+                            <div class="transaction-list">
+                                <!-- 交易记录将通过JS动态生成 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 优惠券区域 -->
+                <div id="coupons" class="content-section">
+                    <div class="section-header">
+                        <h3><i class="fas fa-ticket-alt"></i> 我的优惠券</h3>
+                        <div class="coupon-tabs">
+                            <button class="tab-btn active" data-status="usable">可用 (5)</button>
+                            <button class="tab-btn" data-status="used">已使用 (3)</button>
+                            <button class="tab-btn" data-status="expired">已过期 (2)</button>
+                        </div>
+                    </div>
+                    <div class="coupon-list">
+                        <!-- 优惠券将通过JS动态生成 -->
+                    </div>
+                </div>
+
+                <!-- 账户安全区域 -->
+                <div id="security" class="content-section">
+                    <div class="security-settings">
+                        <div class="security-item">
+                            <div class="security-info">
+                                <h4><i class="fas fa-lock"></i> 登录密码</h4>
+                                <p>定期更改密码可以提高账户安全性</p>
+                            </div>
+                            <button class="security-btn" data-action="changePassword">修改</button>
+                        </div>
+                        <div class="security-item">
+                            <div class="security-info">
+                                <h4><i class="fas fa-mobile-alt"></i> 手机绑定</h4>
+                                <p>已绑定手机：132****4435</p>
+                            </div>
+                            <button class="security-btn" data-action="changePhone">更换</button>
+                        </div>
+                        <div class="security-item">
+                            <div class="security-info">
+                                <h4><i class="fas fa-envelope"></i> 邮箱绑定</h4>
+                                <p>已绑定邮箱：508739754@qq.com</p>
+                            </div>
+                            <button class="security-btn" data-action="changeEmail">更换</button>
+                        </div>
+                        <div class="security-item">
+                            <div class="security-info">
+                                <h4><i class="fas fa-shield-alt"></i> 安全保护</h4>
+                                <p>开启后，异常登录时需要验证</p>
+                            </div>
+                            <div class="security-toggle">
+                                <input type="checkbox" id="securityToggle" checked>
+                                <label for="securityToggle"></label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 设置区域 -->
+                <div id="settings" class="content-section">
+                    <div class="settings-content">
+                        <div class="settings-group">
+                            <h3><i class="fas fa-bell"></i> 通知设置</h3>
+                            <div class="setting-item">
+                                <span>订单状态通知</span>
+                                <input type="checkbox" id="orderNotify" checked>
+                                <label for="orderNotify"></label>
+                            </div>
+                            <div class="setting-item">
+                                <span>促销活动通知</span>
+                                <input type="checkbox" id="promoNotify" checked>
+                                <label for="promoNotify"></label>
+                            </div>
+                            <div class="setting-item">
+                                <span>系统消息通知</span>
+                                <input type="checkbox" id="systemNotify" checked>
+                                <label for="systemNotify"></label>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-group">
+                            <h3><i class="fas fa-eye"></i> 隐私设置</h3>
+                            <div class="setting-item">
+                                <span>公开我的收藏</span>
+                                <input type="checkbox" id="publicFavorites">
+                                <label for="publicFavorites"></label>
+                            </div>
+                            <div class="setting-item">
+                                <span>公开购买记录</span>
+                                <input type="checkbox" id="publicOrders">
+                                <label for="publicOrders"></label>
+                            </div>
+                        </div>
+                        
+                        <div class="settings-actions">
+                            <button class="btn-save" id="saveSettingsBtn">保存设置</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 底部 -->
+    <div class="footer">
+        <div class="wrapper">
+            <div class="service">
+                <ul>
+                    <li><a href="#"><h5>价格亲民</h5></a></li>
+                    <li><a href="#"><h5>物流快捷</h5></a></li>
+                    <li><a href="#"><h5>品质新鲜</h5></a></li>
+                    <li><a href="#"><h5>售后无忧</h5></a></li>
+                </ul>
+            </div>
+            <div class="help">
+                <dl>
+                    <dt>购物指南</dt>
+                    <dd><a href="#">购物流程</a></dd>
+                    <dd><a href="#">支付方式</a></dd>
+                    <dd><a href="#">售后规则</a></dd>
+                </dl>
+                <dl>
+                    <dt>配送方式</dt>
+                    <dd><a href="#">配送运费</a></dd>
+                    <dd><a href="#">配送范围</a></dd>
+                    <dd><a href="#">配送时间</a></dd>
+                </dl>
+                <dl>
+                    <dt>关于我们</dt>
+                    <dd><a href="#">平台规则</a></dd>
+                    <dd><a href="#">联系我们</a></dd>
+                    <dd><a href="#">问题反馈</a></dd>
+                </dl>
+                <dl>
+                    <dt>售后服务</dt>
+                    <dd><a href="#">售后政策</a></dd>
+                    <dd><a href="#">退款说明</a></dd>
+                    <dd><a href="#">取消订单</a></dd>
+                </dl>
+                <dl>
+                    <dt>服务热线</dt>
+                    <dd><a href="#">在线客服</a></dd>
+                    <dd><a href="#">客服电话 400-0000-000</a></dd>
+                    <dd><a href="#">工作时间 周一至周日 8:00-18:00</a></dd>
+                </dl>
+                <div class="right">
+                    <ul>
+                        <li><img src="./images/wechat.png" alt=""><p>微信公众号</p></li>
+                        <li><img src="./images/app.png" alt=""><p>APP下载二维码</p></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>
+                    <a href="#">学号</a> &nbsp|&nbsp
+                    <a href="#">25216950303</a> &nbsp|&nbsp
+                    <a href="#">姓名</a> &nbsp|&nbsp
+                    <a href="#">陈小薇</a> &nbsp|&nbsp
+                    <a href="#">班级</a> &nbsp|&nbsp
+                    <a href="#">25计科专升本3班</a> &nbsp|&nbsp
+                </p>
+                <p><a href="#">@CopyRight © 小兔鲜</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 模态框 -->
+    <div class="modal-overlay" id="addressModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3 id="modalTitle">添加收货地址</h3>
+                <button class="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="addressForm">
+                    <div class="form-group">
+                        <label for="addressName">收货人</label>
+                        <input type="text" id="addressName" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="addressPhone">手机号</label>
+                        <input type="tel" id="addressPhone" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="addressRegion">所在地区</label>
+                        <input type="text" id="addressRegion" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="addressDetail">详细地址</label>
+                        <textarea id="addressDetail" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="addressTag">地址标签</label>
+                        <div class="tag-selector">
+                            <button type="button" class="tag-btn" data-tag="home">家</button>
+                            <button type="button" class="tag-btn" data-tag="company">公司</button>
+                            <button type="button" class="tag-btn" data-tag="school">学校</button>
+                            <input type="text" id="customTag" class="form-control" placeholder="自定义">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <input type="checkbox" id="isDefault">
+                        <label for="isDefault">设为默认地址</label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel">取消</button>
+                <button class="btn-save" id="saveAddressBtn">保存地址</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 消息提示 -->
+    <div class="toast-container" id="toastContainer"></div>
+</body>
+</html>
