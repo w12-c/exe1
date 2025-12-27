@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我的订单 - 小兔鲜儿</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/order.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="./js/order.js" defer></script>
+</head>
+<body>
+    <!-- 快捷导航栏 -->
+    <div class="shortcut">
+        <div class="heart">
+            <ul class="floatR clearfix">
+                <li>|</li>
+                <li class="welcome-user">
+                    <i class="fas fa-user-circle"></i>
+                    <span>欢迎您，<span id="userName">陈小薇</span></span>
+                </li>
+                <li>|</li>
+                <li>
+                    <a href="index.html"><i class="fas fa-home"></i> 返回首页</a>
+                </li>
+                <li>|</li>
+                <li>
+                    <a href="cart.html"><i class="fas fa-shopping-cart"></i> 购物车</a>
+                </li>
+                <li>|</li>
+                <li>
+                    <a href="personal.html"><i class="fas fa-user"></i> 个人中心</a>
+                </li>
+                <li>|</li>
+                <li>
+                    <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt"></i> 退出</a>
+                </li>
+                <li>|</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 导航区域 -->
+    <div class="header">
+        <div class="heart header_dingwei">
+            <div class="logo">
+            </div>
+            <!-- 导航菜单 -->
+            <ul class="navigation">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="category.html?type=fresh">生鲜</a></li>
+                <li><a href="category.html?type=food">美食</a></li>
+                <li><a href="category.html?type=kitchen">餐厨</a></li>
+                <li><a href="category.html?type=appliance">电器</a></li>
+                <li><a href="category.html?type=home">居家</a></li>
+                <li><a href="category.html?type=care">洗护</a></li>
+                <li><a href="category.html?type=baby">孕婴</a></li>
+                <li><a href="category.html?type=clothing">服装</a></li>
+            </ul>
+            <!-- 搜索和购物车 -->
+            <div class="search_shop">
+                <img src="uploads/搜索.png" alt="搜索">
+                <input type="search" placeholder="搜索订单或商品...">
+                <a href="cart.html" id="cartLink">    
+                    <img src="uploads/购物 车1.png" alt="购物车">
+                </a>
+                <span id="cartCount">0</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- 订单页面主要内容 -->
+    <div class="order-main-container heart">
+        <!-- 页面标题 -->
+        <div class="page-header">
+            <div class="page-title">
+                <h1><i class="fas fa-clipboard-list"></i> 我的订单</h1>
+                <p class="subtitle">管理您的所有订单，随时查看订单状态</p>
+            </div>
+            <div class="page-stats">
+                <div class="stat-card">
+                    <div class="stat-icon pending">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="pendingCount">0</span>
+                        <span class="stat-label">待处理</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon completed">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="completedCount">0</span>
+                        <span class="stat-label">已完成</span>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon total">
+                        <i class="fas fa-list-alt"></i>
+                    </div>
+                    <div class="stat-info">
+                        <span class="stat-number" id="totalCount">0</span>
+                        <span class="stat-label">总订单</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 订单筛选工具栏 -->
+        <div class="order-toolbar">
+            <!-- 状态筛选 -->
+            <div class="filter-section">
+                <h3><i class="fas fa-filter"></i> 订单状态</h3>
+                <div class="status-filters">
+                    <button class="status-filter active" data-status="all">
+                        <i class="fas fa-list"></i> 全部订单
+                        <span class="filter-count" id="count-all">0</span>
+                    </button>
+                    <button class="status-filter" data-status="pending_payment">
+                        <i class="fas fa-money-bill-wave"></i> 待付款
+                        <span class="filter-count" id="count-pending">0</span>
+                    </button>
+                    <button class="status-filter" data-status="pending_delivery">
+                        <i class="fas fa-box"></i> 待发货
+                        <span class="filter-count" id="count-delivery">0</span>
+                    </button>
+                    <button class="status-filter" data-status="pending_receipt">
+                        <i class="fas fa-truck"></i> 待收货
+                        <span class="filter-count" id="count-receipt">0</span>
+                    </button>
+                    <button class="status-filter" data-status="completed">
+                        <i class="fas fa-check-circle"></i> 已完成
+                        <span class="filter-count" id="count-completed">0</span>
+                    </button>
+                    <button class="status-filter" data-status="cancelled">
+                        <i class="fas fa-times-circle"></i> 已取消
+                        <span class="filter-count" id="count-cancelled">0</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 时间筛选 -->
+            <div class="time-filter-section">
+                <h3><i class="fas fa-calendar-alt"></i> 时间范围</h3>
+                <div class="time-filters">
+                    <select id="timeRange" class="time-select">
+                        <option value="all">全部时间</option>
+                        <option value="today">今天</option>
+                        <option value="week">本周</option>
+                        <option value="month">本月</option>
+                        <option value="3months">近3个月</option>
+                        <option value="6months">近6个月</option>
+                        <option value="year">今年</option>
+                        <option value="custom">自定义</option>
+                    </select>
+                    
+                    <div class="custom-date-range" id="customDateRange" style="display: none;">
+                        <input type="date" id="startDate" class="date-input">
+                        <span class="date-separator">至</span>
+                        <input type="date" id="endDate" class="date-input">
+                        <button id="applyDateRange" class="btn-apply">确定</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 搜索和操作 -->
+            <div class="action-section">
+                <div class="search-box">
+                    <input type="text" 
+                           id="orderSearch" 
+                           placeholder="搜索订单号、商品名称..."
+                           class="search-input">
+                    <button id="searchButton" class="btn-search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+                <div class="action-buttons">
+                    <button id="refreshBtn" class="btn-action refresh">
+                        <i class="fas fa-sync-alt"></i> 刷新
+                    </button>
+                    <button id="exportBtn" class="btn-action export">
+                        <i class="fas fa-download"></i> 导出
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 订单列表区域 -->
+        <div class="order-list-container">
+            <!-- 订单列表头部 -->
+            <div class="order-list-header">
+                <div class="header-left">
+                    <span class="order-count">共 <span id="displayCount">0</span> 个订单</span>
+                </div>
+                <div class="header-right">
+                    <select id="sortBy" class="sort-select">
+                        <option value="time_desc">最新订单优先</option>
+                        <option value="time_asc">最早订单优先</option>
+                        <option value="price_desc">金额从高到低</option>
+                        <option value="price_asc">金额从低到高</option>
+                    </select>
+                    <div class="view-toggle">
+                        <button class="view-btn active" data-view="list">
+                            <i class="fas fa-list"></i>
+                        </button>
+                        <button class="view-btn" data-view="grid">
+                            <i class="fas fa-th-large"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 订单列表内容 -->
+            <div class="order-list-content" id="orderList">
+                <!-- 订单项将通过JS动态生成 -->
+            </div>
+
+            <!-- 空状态 -->
+            <div class="empty-state" id="emptyState">
+                <div class="empty-icon">
+                    <i class="fas fa-clipboard-list"></i>
+                </div>
+                <h3>暂无订单</h3>
+                <p>您还没有相关的订单记录，快去选购心仪的商品吧！</p>
+                <a href="index.html" class="btn-shopping">
+                    <i class="fas fa-shopping-cart"></i> 去购物
+                </a>
+            </div>
+
+            <!-- 加载状态 -->
+            <div class="loading-state" id="loadingState">
+                <div class="loading-spinner"></div>
+                <p>正在加载订单...</p>
+            </div>
+
+            <!-- 分页 -->
+            <div class="pagination" id="pagination">
+                <button class="page-btn prev" disabled>
+                    <i class="fas fa-chevron-left"></i> 上一页
+                </button>
+                <div class="page-numbers" id="pageNumbers">
+                    <!-- 页码将通过JS动态生成 -->
+                </div>
+                <button class="page-btn next">
+                    下一页 <i class="fas fa-chevron-right"></i>
+                </button>
+                <div class="page-info">
+                    共 <span id="totalPages">0</span> 页，每页
+                    <select id="pageSize" class="page-size-select">
+                        <option value="5">5</option>
+                        <option value="10" selected>10</option>
+                        <option value="20">20</option>
+                        <option value="50">50</option>
+                    </select>
+                    条
+                </div>
+            </div>
+        </div>
+
+        <!-- 订单操作指南 -->
+        <div class="order-guide">
+            <h3><i class="fas fa-info-circle"></i> 订单状态说明</h3>
+            <div class="guide-grid">
+                <div class="guide-item">
+                    <div class="guide-icon status-pending">
+                        <i class="fas fa-money-bill-wave"></i>
+                    </div>
+                    <h4>待付款</h4>
+                    <p>订单已生成，请在规定时间内完成支付</p>
+                    <span class="guide-action">可操作：支付、取消</span>
+                </div>
+                <div class="guide-item">
+                    <div class="guide-icon status-delivery">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <h4>待发货</h4>
+                    <p>已付款，商家正在准备发货</p>
+                    <span class="guide-action">可操作：联系客服</span>
+                </div>
+                <div class="guide-item">
+                    <div class="guide-icon status-shipping">
+                        <i class="fas fa-truck"></i>
+                    </div>
+                    <h4>待收货</h4>
+                    <p>商品已发货，正在运输途中</p>
+                    <span class="guide-action">可操作：查看物流、确认收货</span>
+                </div>
+                <div class="guide-item">
+                    <div class="guide-icon status-completed">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <h4>已完成</h4>
+                    <p>订单已完成，可对商品进行评价</p>
+                    <span class="guide-action">可操作：评价、再次购买</span>
+                </div>
+                <div class="guide-item">
+                    <div class="guide-icon status-cancelled">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <h4>已取消</h4>
+                    <p>订单已被取消或已退款</p>
+                    <span class="guide-action">可操作：删除订单</span>
+                </div>
+            </div>
+        </div>
+
+        
+
+    <!-- 订单详情模态框 -->
+    <div class="modal-overlay" id="orderDetailModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3><i class="fas fa-file-invoice"></i> 订单详情</h3>
+                <button class="close-modal" id="closeDetailModal">&times;</button>
+            </div>
+            <div class="modal-body" id="orderDetailContent">
+                <!-- 详情内容通过JS动态生成 -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 确认操作模态框 -->
+    <div class="modal-overlay" id="confirmModal">
+        <div class="modal-container confirm-modal">
+            <div class="modal-header">
+                <h3 id="confirmTitle">确认操作</h3>
+            </div>
+            <div class="modal-body">
+                <div class="confirm-icon">
+                    <i class="fas fa-question-circle"></i>
+                </div>
+                <p id="confirmMessage">您确定要执行此操作吗？</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" id="cancelConfirm">取消</button>
+                <button class="btn-confirm" id="confirmAction">确定</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 支付模态框 -->
+    <div class="modal-overlay" id="paymentModal">
+        <div class="modal-container payment-modal">
+            <div class="modal-header">
+                <h3><i class="fas fa-credit-card"></i> 订单支付</h3>
+                <button class="close-modal" id="closePaymentModal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="payment-info">
+                    <div class="payment-amount">
+                        <span class="label">支付金额：</span>
+                        <span class="amount" id="paymentAmount">¥0.00</span>
+                    </div>
+                    <div class="payment-order">
+                        <span class="label">订单号：</span>
+                        <span class="order-id" id="paymentOrderId"></span>
+                    </div>
+                </div>
+                
+                <div class="payment-methods">
+                    <h4>选择支付方式</h4>
+                    <div class="methods-grid">
+                        <div class="method-item selected" data-method="alipay">
+                            <div class="method-icon">
+                                <i class="fab fa-alipay"></i>
+                            </div>
+                            <span>支付宝</span>
+                        </div>
+                        <div class="method-item" data-method="wechat">
+                            <div class="method-icon">
+                                <i class="fab fa-weixin"></i>
+                            </div>
+                            <span>微信支付</span>
+                        </div>
+                        <div class="method-item" data-method="bank">
+                            <div class="method-icon">
+                                <i class="fas fa-university"></i>
+                            </div>
+                            <span>银行卡</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="payment-qrcode" id="paymentQrcode">
+                    <div class="qrcode-placeholder">
+                        <i class="fab fa-alipay"></i>
+                        <p>支付宝扫码支付</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-cancel" id="cancelPayment">取消支付</button>
+                <button class="btn-confirm" id="confirmPayment">确认支付</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 消息提示 -->
+    <div class="toast-container" id="toastContainer"></div>
+
+    <!-- 底部 -->
+    <div class="footer">
+        <div class="wrapper">
+            <div class="service">
+                <ul>
+                    <li><a href="#"><h5>价格亲民</h5></a></li>
+                    <li><a href="#"><h5>物流快捷</h5></a></li>
+                    <li><a href="#"><h5>品质新鲜</h5></a></li>
+                    <li><a href="#"><h5>售后无忧</h5></a></li>
+                </ul>
+            </div>
+            <div class="help">
+                <dl>
+                    <dt>购物指南</dt>
+                    <dd><a href="#">购物流程</a></dd>
+                    <dd><a href="#">支付方式</a></dd>
+                    <dd><a href="#">售后规则</a></dd>
+                </dl>
+                <dl>
+                    <dt>配送方式</dt>
+                    <dd><a href="#">配送运费</a></dd>
+                    <dd><a href="#">配送范围</a></dd>
+                    <dd><a href="#">配送时间</a></dd>
+                </dl>
+                <dl>
+                    <dt>关于我们</dt>
+                    <dd><a href="#">平台规则</a></dd>
+                    <dd><a href="#">联系我们</a></dd>
+                    <dd><a href="#">问题反馈</a></dd>
+                </dl>
+                <dl>
+                    <dt>售后服务</dt>
+                    <dd><a href="#">售后政策</a></dd>
+                    <dd><a href="#">退款说明</a></dd>
+                    <dd><a href="#">取消订单</a></dd>
+                </dl>
+                <dl>
+                    <dt>服务热线</dt>
+                    <dd><a href="#">在线客服</a></dd>
+                    <dd><a href="#">客服电话 400-0000-000</a></dd>
+                    <dd><a href="#">工作时间 周一至周日 8:00-18:00</a></dd>
+                </dl>
+                <div class="right">
+                    <ul>
+                        <li><img src="./images/wechat.png" alt=""><p>微信公众号</p></li>
+                        <li><img src="./images/app.png" alt=""><p>APP下载二维码</p></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>
+                    <a href="#">学号</a> &nbsp|&nbsp
+                    <a href="#">25216950303</a> &nbsp|&nbsp
+                    <a href="#">姓名</a> &nbsp|&nbsp
+                    <a href="#">陈小薇</a> &nbsp|&nbsp
+                    <a href="#">班级</a> &nbsp|&nbsp
+                    <a href="#">25计科专升本3班</a> &nbsp|&nbsp
+                </p>
+                <p><a href="#">@CopyRight © 小兔鲜</a></p>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
