@@ -10,6 +10,8 @@
   <link rel="stylesheet" href="./css/base.css">
   <link rel="stylesheet" href="./css/common.css">
   <link rel="stylesheet" href="./css/index.css">
+  <script src="./js/login.js" defer></script>
+  <script src="./js/index.js" defer></script>
 </head>
 <body>
     <!-- 快捷导航区域开始 -->
@@ -18,15 +20,15 @@
             <ul class="floatR clearfix">
                 <li>|</li>
                 <li>
-                    <a href="#">请先登录</a>
+                    <a href="login.html">请先登录</a>
                 </li>
                 <li>|</li>
                 <li>
-                    <a href="#">我的订单</a>
+                    <a href="order.html">我的订单</a>
                 </li>
                 <li>|</li>
                 <li>
-                    <a href="#">会员中心</a>
+                    <a href="personal.html">会员中心</a>
                 </li>
                 <li>|</li>
                 <li>
@@ -44,6 +46,7 @@
             </ul>
         </div>
     </div>
+    
     <!-- 快捷导航区域结束 -->
     <!-- 导航区域开始 -->
     <div class="header">
@@ -62,14 +65,33 @@
                 <li><a href="#">孕婴</a></li>
                 <li><a href="#">服装</a></li>
             </ul>
-            <div class="search_shop">
+            <!-- <div class="search_shop">
                 <img src="uploads/搜索.png" alt="">
                 <input type="search" placeholder="25216950303陈小薇">
                 <a href="#">    
                 <img src="uploads/购物 车1.png" alt="">
                 </a>
                 <span>22</span>
-            </div>
+            </div> -->
+
+<div class="search_shop">
+    <img src="uploads/搜索.png" alt="">
+    <form id="homeSearchForm" action="search.html" method="get">
+        <input type="search" 
+               id="homeSearchInput" 
+               name="q"
+               placeholder="25216950303陈小薇"
+               autocomplete="off">
+    </form>
+    <button type="submit" form="homeSearchForm" id="homeSearchButton">
+        <img src="uploads/搜索.png" alt="搜索" style="width: 20px; height: 20px;">
+    </button>
+    <a href="cart.html" id="cartLink">    
+        <img src="uploads/购物 车1.png" alt="购物车">
+    </a>
+    <span id="cartCount">22</span>
+</div>
+
         </div>
     </div>
     <!-- 导航区域结束 -->
@@ -141,7 +163,7 @@
                     </li>
                 </ul>
             </div>
-            <!-- 轮播图：静态效果 -->
+            <!-- 轮播图：静态效果
             <div class="banner_right">
                 <ul>
                     <li>
@@ -155,7 +177,27 @@
                 </div>
             </div>
         </div>
+    </div> -->
+
+    <!-- 修改后的轮播图部分 -->
+<div class="banner_right">
+    <div class="banner_slides">
+        <div class="slide active">
+            <a href="#"><img src="uploads/首页-自然造物 Made in Nature-淘宝网.png" alt="轮播图1"></a>
+        </div>
+        <div class="slide">
+            <a href="#"><img src="images/1.jpg" alt="轮播图2"></a>
+        </div>
+        <div class="slide">
+            <a href="#"><img src="images/2.jpg" alt="轮播图3"></a>
+        </div>
     </div>
+    <div class="banner_dots">
+        <span class="dot active" data-index="0"></span>
+        <span class="dot" data-index="1"></span>
+        <span class="dot" data-index="2"></span>
+    </div>
+</div>
 <!-- banner区域结束-->
     <!-- 新鲜好物区域 -->
     <div class="fresh heart">
@@ -918,5 +960,53 @@
     </div>
   </div>
 </body>
+
+<script>
+        let current=0;
+        let autoPlay;
+        const item=document.querySelectorAll('.item');
+        const dots=document.querySelectorAll('.dots li');
+        //获取按钮元素
+	    const prevBtn=document.querySelector('.prev');
+	    const nextBtn=document.querySelector('.next');
+
+        startAutoPlay();/*初始自动播放*/
+
+        //为指示点添加事件监听
+	    dots.forEach((dot,index)=>{
+		    dot.addEventListener('click',()=>{
+			    jumpToSlide(index);
+		    });
+	    });
+	    //为左右按钮添加事件监听
+	    prevBtn.addEventListener('click',prevSlider);
+	    nextBtn.addEventListener('click',nextSlider);
+
+        function jumpToSlide(index){
+            current=index;
+            updateSlider();
+        }
+        function nextSlider(){
+            current=(current+1)%item.length;
+            updateSlider();
+        }
+        function prevSlider(){
+            current=(current-1+item.length)%item.length;
+            updateSlider();
+        }
+
+        function updateSlider(){
+            const items=document.querySelector('.items');
+            items.style.transform=`translateX(-${current * 100}%)`;
+
+            /*更新点的状态*/
+            dots.forEach((dot,index)=>{
+                dot.classList.toggle('active', index === current);
+            }) ; 
+        }
+        function startAutoPlay(){
+            autoPlay=setInterval(nextSlider,3000);
+        }
+</script>
 
 </html>
