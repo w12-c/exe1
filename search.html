@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>商品搜索 - 小兔鲜儿</title>
+    <link rel="stylesheet" href="./css/base.css">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/search.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="./js/search.js" defer></script>
+</head>
+<body>
+    <!-- 快捷导航栏 -->
+    <div class="shortcut">
+        <div class="heart">
+            <ul class="floatR clearfix">
+                <li>|</li>
+                <li>
+                    <a href="login.html"><i class="fas fa-sign-in-alt"></i> 请先登录</a>
+                </li>
+                <li>|</li>
+                <li>
+                    <a href="order.html">我的订单</a>
+                </li>
+                <li>|</li>
+                <li>
+                    <a href="personal.html">会员中心</a>
+                </li>
+                <li>|</li>
+                <li>
+                    <a href="#">帮助中心</a>
+                </li>
+                <li>|</li>
+                <li>
+                    <a href="#">关于我们</a>
+                </li>
+                <li>|</li>
+                <li>
+                    <img src="uploads/手机.png" alt="">
+                    <a href="#">手机版</a>
+                </li>
+                <li>|</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 导航区域 -->
+    <div class="header">
+        <div class="heart header_dingwei">
+            <div class="logo">
+                <a href="index.html"></a>
+            </div>
+            <!-- 导航菜单 -->
+            <ul class="navigation">
+                <li><a href="index.html">首页</a></li>
+                <li><a href="category.html?type=fresh">生鲜</a></li>
+                <li><a href="category.html?type=food">美食</a></li>
+                <li><a href="category.html?type=kitchen">餐厨</a></li>
+                <li><a href="category.html?type=appliance">电器</a></li>
+                <li><a href="category.html?type=home">居家</a></li>
+                <li><a href="category.html?type=care">洗护</a></li>
+                <li><a href="category.html?type=baby">孕婴</a></li>
+                <li><a href="category.html?type=clothing">服装</a></li>
+            </ul>
+            <!-- 搜索框 -->
+            <div class="search_box">
+                <div class="search_container">
+                    <input type="text" 
+                           id="searchInput" 
+                           class="search_input"
+                           placeholder="搜索商品、品牌、分类..."
+                           autocomplete="off">
+                    <button class="search_button" id="searchButton">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <!-- 语音搜索按钮 -->
+                    <button class="voice_button" id="voiceButton">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                    <!-- 智能提示下拉框 -->
+                    <div class="suggestions_box" id="suggestionsBox">
+                        <div class="suggestions_header">
+                            <span>热门搜索</span>
+                            <button class="clear_history" id="clearHistory">清除记录</button>
+                        </div>
+                        <div class="suggestions_list" id="suggestionsList">
+                            <!-- 智能提示项将通过JS动态生成 -->
+                        </div>
+                        <div class="search_history" id="searchHistory">
+                            <div class="history_header">
+                                <i class="fas fa-history"></i>
+                                <span>搜索历史</span>
+                            </div>
+                            <div class="history_list" id="historyList">
+                                <!-- 搜索历史将通过JS动态生成 -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- 购物车 -->
+                <a href="cart.html" class="cart_link">    
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart_count" id="cartCount">0</span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- 搜索页面主要内容 -->
+    <div class="search-main-container heart">
+        <!-- 搜索框区域 -->
+        <div class="search_hero">
+            <div class="search_hero_content">
+                <h1>发现好物</h1>
+                <p class="subtitle">搜索超过10万种优质商品</p>
+                
+                <!-- 主搜索框 -->
+                <div class="main_search_box">
+                    <div class="main_search_container">
+                        <input type="text" 
+                               id="mainSearchInput"
+                               class="main_search_input"
+                               placeholder="请输入商品名称、品牌或分类..."
+                               autocomplete="off">
+                        <button class="main_search_button" id="mainSearchButton">
+                            <i class="fas fa-search"></i>
+                            <span>搜索</span>
+                        </button>
+                    </div>
+                    
+                    <!-- 热门搜索标签 -->
+                    <div class="hot_search_tags">
+                        <span class="tags_title">热搜榜：</span>
+                        <div class="tags_list" id="hotTagsList">
+                            <!-- 热门标签将通过JS动态生成 -->
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- 高级搜索选项 -->
+                <div class="advanced_search" id="advancedSearch">
+                    <div class="advanced_toggle">
+                        <button class="toggle_button" id="toggleAdvanced">
+                            <i class="fas fa-sliders-h"></i>
+                            高级搜索
+                            <i class="fas fa-chevron-down" id="toggleIcon"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="advanced_options" id="advancedOptions">
+                        <div class="filter_row">
+                            <div class="filter_group">
+                                <label for="categoryFilter"><i class="fas fa-tag"></i> 商品分类</label>
+                                <select id="categoryFilter" class="filter_select">
+                                    <option value="">全部分类</option>
+                                    <option value="fresh">生鲜</option>
+                                    <option value="food">美食</option>
+                                    <option value="kitchen">餐厨</option>
+                                    <option value="appliance">电器</option>
+                                    <option value="home">居家</option>
+                                    <option value="care">洗护</option>
+                                    <option value="baby">孕婴</option>
+                                    <option value="clothing">服装</option>
+                                </select>
+                            </div>
+                            
+                            <div class="filter_group">
+                                <label for="priceFilter"><i class="fas fa-dollar-sign"></i> 价格区间</label>
+                                <select id="priceFilter" class="filter_select">
+                                    <option value="">不限价格</option>
+                                    <option value="0-50">50元以下</option>
+                                    <option value="50-100">50-100元</option>
+                                    <option value="100-200">100-200元</option>
+                                    <option value="200-500">200-500元</option>
+                                    <option value="500-1000">500-1000元</option>
+                                    <option value="1000-">1000元以上</option>
+                                </select>
+                            </div>
+                            
+                            <div class="filter_group">
+                                <label for="sortFilter"><i class="fas fa-sort-amount-down"></i> 排序方式</label>
+                                <select id="sortFilter" class="filter_select">
+                                    <option value="relevance">综合排序</option>
+                                    <option value="sales">销量优先</option>
+                                    <option value="price_asc">价格从低到高</option>
+                                    <option value="price_desc">价格从高到低</option>
+                                    <option value="new">最新上架</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="filter_actions">
+                            <button class="filter_reset" id="resetFilters">重置筛选</button>
+                            <button class="filter_apply" id="applyFilters">应用筛选</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 搜索结果区域 -->
+        <div class="search_results_section" id="searchResultsSection">
+            <!-- 搜索结果头部 -->
+            <div class="results_header">
+                <div class="results_info">
+                    <h2 id="resultsTitle">搜索结果</h2>
+                    <p class="results_count">
+                        共找到 <span id="totalResults">0</span> 件商品
+                        <span id="searchTime"></span>
+                    </p>
+                </div>
+                
+                <div class="results_actions">
+                    <div class="view_toggle">
+                        <button class="view_btn active" data-view="grid">
+                            <i class="fas fa-th-large"></i>
+                        </button>
+                        <button class="view_btn" data-view="list">
+                            <i class="fas fa-list"></i>
+                        </button>
+                    </div>
+                    
+                    <div class="results_sort">
+                        <select id="resultsSort" class="sort_select">
+                            <option value="relevance">综合排序</option>
+                            <option value="sales">销量优先</option>
+                            <option value="price_asc">价格从低到高</option>
+                            <option value="price_desc">价格从高到低</option>
+                            <option value="new">最新上架</option>
+                            <option value="rating">评价最高</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 筛选条件展示 -->
+            <div class="applied_filters" id="appliedFilters">
+                <!-- 已应用的筛选条件将通过JS动态生成 -->
+            </div>
+            
+            <!-- 商品列表 -->
+            <div class="products_container" id="productsContainer">
+                <div class="products_grid" id="productsGrid">
+                    <!-- 商品卡片将通过JS动态生成 -->
+                </div>
+                
+                <div class="products_list" id="productsList" style="display: none;">
+                    <!-- 列表视图将通过JS动态生成 -->
+                </div>
+            </div>
+            
+            <!-- 分页 -->
+            <div class="pagination" id="pagination">
+                <button class="page_btn prev" id="prevPage" disabled>
+                    <i class="fas fa-chevron-left"></i> 上一页
+                </button>
+                <div class="page_numbers" id="pageNumbers">
+                    <!-- 页码将通过JS动态生成 -->
+                </div>
+                <button class="page_btn next" id="nextPage">
+                    下一页 <i class="fas fa-chevron-right"></i>
+                </button>
+                <div class="page_info">
+                    共 <span id="totalPages">0</span> 页
+                    <select id="pageSize" class="page_size">
+                        <option value="20">20条/页</option>
+                        <option value="40">40条/页</option>
+                        <option value="60">60条/页</option>
+                    </select>
+                    跳至 <input type="number" id="jumpToPage" min="1" value="1"> 页
+                    <button class="jump_btn" id="jumpButton">跳转</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- 没有搜索结果 -->
+        <div class="no_results" id="noResults" style="display: none;">
+            <div class="no_results_icon">
+                <i class="fas fa-search"></i>
+            </div>
+            <h3>没有找到相关商品</h3>
+            <p>抱歉，没有找到与"<span id="searchKeyword"></span>"相关的商品</p>
+            <div class="suggestions">
+                <p>建议您：</p>
+                <ul>
+                    <li>检查输入的关键词是否正确</li>
+                    <li>尝试使用更简单的关键词</li>
+                    <li>查看热门搜索或商品分类</li>
+                </ul>
+            </div>
+            <button class="back_home" onclick="window.location.href='index.html'">
+                <i class="fas fa-home"></i> 返回首页
+            </button>
+        </div>
+        
+        <!-- 搜索历史区域 -->
+        <div class="search_history_section">
+            <div class="history_header_section">
+                <h3><i class="fas fa-history"></i> 搜索历史</h3>
+                <button class="clear_all_history" id="clearAllHistory">
+                    <i class="fas fa-trash"></i> 清除全部
+                </button>
+            </div>
+            <div class="history_list_section" id="historyListSection">
+                <!-- 详细搜索历史将通过JS动态生成 -->
+            </div>
+        </div>
+        
+        <!-- 相关推荐 -->
+        <div class="recommendations_section">
+            <h3><i class="fas fa-fire"></i> 大家都在搜</h3>
+            <div class="recommendations_grid" id="recommendationsGrid">
+                <!-- 推荐商品将通过JS动态生成 -->
+            </div>
+        </div>
+    </div>
+    <!-- 底部 -->
+    <div class="footer">
+        <div class="wrapper">
+            <div class="service">
+                <ul>
+                    <li><a href="#"><h5>价格亲民</h5></a></li>
+                    <li><a href="#"><h5>物流快捷</h5></a></li>
+                    <li><a href="#"><h5>品质新鲜</h5></a></li>
+                    <li><a href="#"><h5>售后无忧</h5></a></li>
+                </ul>
+            </div>
+            <div class="help">
+                <dl>
+                    <dt>购物指南</dt>
+                    <dd><a href="#">购物流程</a></dd>
+                    <dd><a href="#">支付方式</a></dd>
+                    <dd><a href="#">售后规则</a></dd>
+                </dl>
+                <dl>
+                    <dt>配送方式</dt>
+                    <dd><a href="#">配送运费</a></dd>
+                    <dd><a href="#">配送范围</a></dd>
+                    <dd><a href="#">配送时间</a></dd>
+                </dl>
+                <dl>
+                    <dt>关于我们</dt>
+                    <dd><a href="#">平台规则</a></dd>
+                    <dd><a href="#">联系我们</a></dd>
+                    <dd><a href="#">问题反馈</a></dd>
+                </dl>
+                <dl>
+                    <dt>售后服务</dt>
+                    <dd><a href="#">售后政策</a></dd>
+                    <dd><a href="#">退款说明</a></dd>
+                    <dd><a href="#">取消订单</a></dd>
+                </dl>
+                <dl>
+                    <dt>服务热线</dt>
+                    <dd><a href="#">在线客服</a></dd>
+                    <dd><a href="#">客服电话 400-0000-000</a></dd>
+                    <dd><a href="#">工作时间 周一至周日 8:00-18:00</a></dd>
+                </dl>
+                <div class="right">
+                    <ul>
+                        <li><img src="./images/wechat.png" alt=""><p>微信公众号</p></li>
+                        <li><img src="./images/app.png" alt=""><p>APP下载二维码</p></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>
+                    <a href="#">学号</a> &nbsp|&nbsp
+                    <a href="#">25216950303</a> &nbsp|&nbsp
+                    <a href="#">姓名</a> &nbsp|&nbsp
+                    <a href="#">陈小薇</a> &nbsp|&nbsp
+                    <a href="#">班级</a> &nbsp|&nbsp
+                    <a href="#">25计科专升本3班</a> &nbsp|&nbsp
+                </p>
+                <p><a href="#">@CopyRight © 小兔鲜</a></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
